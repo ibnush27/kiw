@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sela Rasa Bakery — Crafted with Warmth & Passion</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#FDFBF7',
+                            100: '#F8F3EA',
+                            200: '#EFE3D3',
+                            300: '#E2CDB5',
+                            400: '#D2B090',
+                            500: '#B88B63',
+                            600: '#9E6E45',
+                            700: '#7C5232',
+                            800: '#5C3A21',
+                            900: '#3D2413',
+                        },
+                        terracotta: {
+                            500: '#C86D51',
+                            600: '#B2563B'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8F3EA;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2B090;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B88B63;
+        }
+        .glass-header {
+            background: rgba(253, 251, 247, 0.92);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-brand-50 text-brand-900 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Top Banner Notification -->
+    <div class="bg-brand-800 text-brand-100 text-xs sm:text-sm py-2 px-4 text-center font-medium tracking-wide">
+        ✨ Fresh Bake Everyday at 07:00 AM — Dapatkan Gratis Ongkir untuk Pemesanan via Website! ✨
+    </div>
+
+    <!-- Header / Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-header border-b border-brand-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-brand-700 text-brand-50 flex items-center justify-center font-serif text-xl font-bold group-hover:bg-brand-600 transition-colors shadow-sm">
+                    SR
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-2xl font-bold tracking-tight text-brand-900">Sela Rasa</span>
+                    <span class="text-[10px] tracking-[0.2em] uppercase text-brand-600 font-semibold -mt-1">Artisanal Bakery</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide text-brand-800">
+                <a href="#home" class="hover:text-brand-600 transition-colors py-1 border-b-2 border-brand-700">Beranda</a>
+                <a href="#menu" class="hover:text-brand-600 transition-colors py-1 border-b-2 border-transparent hover:border-brand-400">Menu Bakery</a>
+                <a href="#bestsellers" class="hover:text-brand-600 transition-colors py-1 border-b-2 border-transparent hover:border-brand-400">Favorit</a>
+                <a href="#story" class="hover:text-brand-600 transition-colors py-1 border-b-2 border-transparent hover:border-brand-400">Cerita Kami</a>
+                <a href="#location" class="hover:text-brand-600 transition-colors py-1 border-b-2 border-transparent hover:border-brand-400">Lokasi Toko</a>
+            </nav>
+
+            <!-- Interactive Icons (Cart & Search & Mobile Toggle) -->
+            <div class="flex items-center space-x-4">
+                <!-- Search Button -->
+                <button onclick="toggleSearchModal()" class="p-2.5 text-brand-800 hover:text-brand-600 hover:bg-brand-100 rounded-full transition-all" title="Cari Menu">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCartDrawer()" class="relative p-2.5 text-brand-800 hover:text-brand-600 hover:bg-brand-100 rounded-full transition-all" title="Keranjang Belanja">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cartCountBadge" class="absolute top-1 right-1 bg-terracotta-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">
+                        0
+                    </span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 text-brand-800 hover:text-brand-600 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileNav" class="hidden md:hidden bg-brand-100 border-b border-brand-200 px-6 py-4 space-y-3 font-medium">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-brand-900 font-semibold border-b border-brand-200">Beranda</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-brand-800 hover:text-brand-600">Menu Bakery</a>
+            <a href="#bestsellers" onclick="toggleMobileMenu()" class="block py-2 text-brand-800 hover:text-brand-600">Favorit</a>
+            <a href="#story" onclick="toggleMobileMenu()" class="block py-2 text-brand-800 hover:text-brand-600">Cerita Kami</a>
+            <a href="#location" onclick="toggleMobileMenu()" class="block py-2 text-brand-800 hover:text-brand-600">Lokasi Toko</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-brand-100 overflow-hidden py-16 md:py-24 border-b border-brand-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    
+                    <!-- Hero Text Content -->
+                    <div class="space-y-6 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-200 text-brand-800 text-xs font-semibold tracking-wider uppercase">
+                            <i class="fa-solid fa-wheat-awn text-brand-600"></i> Artisanal & Fresh Daily
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-brand-900 leading-tight">
+                            Kehangatan & Kelezatan dalam Setiap Gigitan.
+                        </h1>
+                        <p class="text-brand-700 text-base sm:text-lg max-w-xl mx-auto md:mx-0 font-normal leading-relaxed">
+                            Di <strong class="text-brand-900">Sela Rasa Bakery</strong>, kami memanggang kebahagiaan setiap pagi dengan bahan alami terbaik, fermentasi sourdough yang sempurna, dan resep otentik bertema hangat.
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-2">
+                            <a href="#menu" class="w-full sm:w-auto px-8 py-3.5 bg-brand-800 hover:bg-brand-700 text-brand-50 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all text-center flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-utensils text-sm"></i> Lihat Menu Produk
+                            </a>
+                            <a href="#bestsellers" class="w-full sm:w-auto px-8 py-3.5 bg-brand-50 hover:bg-brand-200 text-brand-900 font-semibold rounded-xl border border-brand-300 transition-all text-center flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-star text-brand-600 text-sm"></i> Produk Spesial
+                            </a>
+                        </div>
+
+                        <!-- Highlights Quick Badges -->
+                        <div class="pt-6 grid grid-cols-3 gap-4 border-t border-brand-200 text-center md:text-left">
+                            <div>
+                                <h3 class="font-serif font-bold text-xl text-brand-900">100%</h3>
+                                <p class="text-xs text-brand-600">Bahan Alami</p>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-xl text-brand-900">Slow</h3>
+                                <p class="text-xs text-brand-600">Fermentation</p>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-xl text-brand-900">Daily</h3>
+                                <p class="text-xs text-brand-600">Freshly Baked</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Media -->
+                    <div class="relative flex justify-center">
+                        <div class="relative w-full max-w-md lg:max-w-lg aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-brand-50">
+                            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000&auto=format&fit=crop" 
+                                 alt="Sela Rasa Fresh Pastries" 
+                                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-900/40 via-transparent to-transparent"></div>
+                        </div>
+
+                        <!-- Floating Feature Badge -->
+                        <div class="absolute -bottom-6 -left-2 sm:left-4 bg-brand-50 p-4 rounded-xl shadow-xl border border-brand-200 flex items-center gap-3 max-w-xs">
+                            <div class="w-12 h-12 rounded-lg bg-brand-200 flex items-center justify-center text-brand-800 text-xl flex-shrink-0">
+                                <i class="fa-solid fa-cookie-bite"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wider text-brand-600">Must Try!</p>
+                                <p class="font-serif font-bold text-sm text-brand-900">Dubai Chewy Cookie</p>
+                                <p class="text-xs text-brand-700">Pistachio Knafeh & Chocolate</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Highlights (Best Sellers) -->
+        <section id="bestsellers" class="py-16 bg-brand-50 border-b border-brand-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brand-600 font-semibold uppercase text-xs tracking-widest">Pilihan Terfavorit</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mt-1">Menu Unggulan Sela Rasa</h2>
+                    <p class="text-brand-700 mt-2 text-sm sm:text-base">Varian roti dan pastry ikonik yang paling dicari pengunjung toko kami setiap hari.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: Dubai Chewy Cookie -->
+                    <div class="bg-brand-100 rounded-2xl p-5 border border-brand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-brand-200">
+                                <span class="absolute top-3 left-3 bg-terracotta-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">Trending</span>
+                                <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Dubai Chewy Cookie" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-brand-900">Dubai Chewy Cookie</h3>
+                            <p class="text-brand-700 text-xs sm:text-sm mt-1 leading-relaxed">Cookie renyah bertekstur chewy dengan isian pistachio knafeh melimpah dan balutan cokelat berkualitas.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-brand-200 flex items-center justify-between">
+                            <span class="font-serif font-bold text-lg text-brand-900">Rp 45.000</span>
+                            <button onclick="addToCart('Dubai Chewy Cookie', 45000, 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop')" class="px-4 py-2 bg-brand-800 hover:bg-brand-700 text-brand-50 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Pesan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Pain au Chocolat -->
+                    <div class="bg-brand-100 rounded-2xl p-5 border border-brand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-brand-200">
+                                <span class="absolute top-3 left-3 bg-brand-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">Best Seller</span>
+                                <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Pain au Chocolat" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-brand-900">Pain au Chocolat</h3>
+                            <p class="text-brand-700 text-xs sm:text-sm mt-1 leading-relaxed">Flaky croissant khas Prancis berlapis butter impor segar dengan isian 2 batang dark chocolate leleh.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-brand-200 flex items-center justify-between">
+                            <span class="font-serif font-bold text-lg text-brand-900">Rp 32.000</span>
+                            <button onclick="addToCart('Pain au Chocolat', 32000, 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=800&auto=format&fit=crop')" class="px-4 py-2 bg-brand-800 hover:bg-brand-700 text-brand-50 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Pesan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Fresh Salt Bread -->
+                    <div class="bg-brand-100 rounded-2xl p-5 border border-brand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-brand-200">
+                                <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider z-10">Favorite</span>
+                                <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Fresh Salt Bread" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-brand-900">Artisanal Salt Bread</h3>
+                            <p class="text-brand-700 text-xs sm:text-sm mt-1 leading-relaxed">Roti bernuansa lembut beraroma butter gurih yang kaya, ditaburi garam laut (sea salt) kristal di atasnya.</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-brand-200 flex items-center justify-between">
+                            <span class="font-serif font-bold text-lg text-brand-900">Rp 22.000</span>
+                            <button onclick="addToCart('Artisanal Salt Bread', 22000, 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=800&auto=format&fit=crop')" class="px-4 py-2 bg-brand-800 hover:bg-brand-700 text-brand-50 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Pesan
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Filterable Menu Grid Showcase Section -->
+        <section id="menu" class="py-16 bg-brand-100 border-b border-brand-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-brand-600 font-semibold uppercase text-xs tracking-widest">Katalog Lengkap</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 mt-1">Jelajahi Menu Sela Rasa</h2>
+                    <p class="text-brand-700 mt-2 text-sm sm:text-base">Dipanggang secara berkala sepanjang hari untuk menjamin kesegaran rasa terbaik.</p>
+                </div>
+
+                <!-- Filter Category Tabs -->
+                <div class="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+                    <button onclick="filterMenu('all', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-800 text-white shadow-sm">
+                        Semua Menu
+                    </button>
+                    <button onclick="filterMenu('bread', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-50 text-brand-800 hover:bg-brand-200 border border-brand-300">
+                        Artisanal Breads
+                    </button>
+                    <button onclick="filterMenu('pastry', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-50 text-brand-800 hover:bg-brand-200 border border-brand-300">
+                        Pastries & Croissants
+                    </button>
+                    <button onclick="filterMenu('cake', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-50 text-brand-800 hover:bg-brand-200 border border-brand-300">
+                        Cakes & Slices
+                    </button>
+                    <button onclick="filterMenu('specials', this)" class="menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-50 text-brand-800 hover:bg-brand-200 border border-brand-300">
+                        Special Treats
+                    </button>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Products rendered via JavaScript for filterability -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Our Story Section -->
+        <section id="story" class="py-20 bg-brand-50 border-b border-brand-200 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    
+                    <div class="relative">
+                        <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border-4 border-brand-100">
+                            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000&auto=format&fit=crop" 
+                                 alt="Sela Rasa Bakery Atmosphere" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -top-6 -right-6 hidden sm:block w-32 h-32 rounded-full border-2 border-dashed border-brand-400 p-2 animate-spin-slow">
+                            <div class="w-full h-full rounded-full bg-brand-200 flex items-center justify-center text-center p-2 text-[10px] font-serif text-brand-800 font-bold uppercase tracking-wider">
+                                Sela Rasa • Warm & Organic •
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <span class="text-brand-600 font-semibold uppercase text-xs tracking-widest">Filosofi Kami</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-900 leading-tight">
+                            Menghadirkan Sela Nikmat dalam Setiap Momen Anda
+                        </h2>
+                        <p class="text-brand-700 text-sm sm:text-base leading-relaxed">
+                            Nama <strong>Sela Rasa</strong> lahir dari semangat untuk memberikan jeda manis di tengah kesibukan harian Anda. Kami percaya bahwa roti bukan sekadar makanan, melainkan karya seni yang dipanggang dengan kesabaran.
+                        </p>
+                        <p class="text-brand-700 text-sm sm:text-base leading-relaxed">
+                            Setiap potong *Sourdough*, *Salt Bread*, hingga *Dubai Chewy Cookie* kami buat menggunakan bahan alami tanpa pengawet buatan, mentega murni bermutu tinggi, dan teknik fermentasi alami yang memberikan aroma khas yang menenangkan.
+                        </p>
+
+                        <div class="pt-4 flex items-center gap-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center text-brand-800">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-brand-900">Bahan Alami Pilihan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center text-brand-800">
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-brand-900">Resep Sepenuh Hati</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Visit Us Section -->
+        <section id="location" class="py-16 bg-brand-100 border-b border-brand-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-brand-50 rounded-3xl p-8 sm:p-12 border border-brand-200 shadow-sm grid lg:grid-cols-3 gap-8 items-center">
+                    
+                    <div class="lg:col-span-1 space-y-4">
+                        <span class="text-brand-600 font-semibold uppercase text-xs tracking-widest">Kunjungi Toko</span>
+                        <h2 class="font-serif text-3xl font-bold text-brand-900">Suasana Hangat Toko Sela Rasa</h2>
+                        <p class="text-brand-700 text-sm leading-relaxed">
+                            Nikmati aroma roti hangat yang baru keluar dari oven sambil menikmati secangkir kopi berkualitas di outlet kami.
+                        </p>
+                        
+                        <div class="space-y-3 pt-2 text-sm text-brand-800">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-location-dot text-brand-600 mt-1"></i>
+                                <span>Jl. Melati Warmth No. 42, Senopati, Jakarta Selatan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-clock text-brand-600"></i>
+                                <span>Senin – Minggu: 07.00 – 21.00 WIB</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-phone text-brand-600"></i>
+                                <span>+62 812-3456-7890</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 rounded-2xl overflow-hidden shadow-inner h-64 lg:h-80 relative bg-brand-200">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop" 
+                             alt="Sela Rasa Store Location Visual" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-brand-900/20"></div>
+                        <div class="absolute bottom-4 left-4 bg-brand-50/90 backdrop-blur px-4 py-2 rounded-lg text-xs font-semibold text-brand-900 flex items-center gap-2 shadow">
+                            <i class="fa-solid fa-store text-brand-600"></i> Sela Rasa Flagship Store
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-brand-200 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-brand-800">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-400 text-brand-900 flex items-center justify-center font-serif font-bold text-sm">
+                            SR
+                        </div>
+                        <span class="font-serif text-xl font-bold text-brand-50">Sela Rasa</span>
+                    </div>
+                    <p class="text-xs text-brand-300 leading-relaxed">
+                        Toko bakery minimalis berkonsep hangat yang menyajikan aneka roti artisanal, croissant, cake slice, dan kelezatan pilihan setiap hari.
+                    </p>
+                    <div class="flex space-x-4 text-brand-300 pt-2">
+                        <a href="#" class="hover:text-brand-50 transition-colors"><i class="fa-brands fa-instagram text-lg"></i></a>
+                        <a href="#" class="hover:text-brand-50 transition-colors"><i class="fa-brands fa-tiktok text-lg"></i></a>
+                        <a href="#" class="hover:text-brand-50 transition-colors"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="font-serif font-bold text-brand-50 text-sm mb-4 tracking-wider uppercase">Menu Populer</h4>
+                    <ul class="space-y-2 text-xs text-brand-300">
+                        <li><a href="#menu" class="hover:text-brand-50 transition-colors">Artisanal Sourdough</a></li>
+                        <li><a href="#menu" class="hover:text-brand-50 transition-colors">Sea Salt Bread</a></li>
+                        <li><a href="#menu" class="hover:text-brand-50 transition-colors">Pain au Chocolat</a></li>
+                        <li><a href="#menu" class="hover:text-brand-50 transition-colors">Tiramisu Slice</a></li>
+                        <li><a href="#menu" class="hover:text-brand-50 transition-colors">Dubai Chewy Cookie</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Hours & Info -->
+                <div>
+                    <h4 class="font-serif font-bold text-brand-50 text-sm mb-4 tracking-wider uppercase">Jam Operasional</h4>
+                    <ul class="space-y-2 text-xs text-brand-300">
+                        <li class="flex justify-between"><span>Senin - Jumat:</span> <span>07:00 - 21:00</span></li>
+                        <li class="flex justify-between"><span>Sabtu - Minggu:</span> <span>07:00 - 22:00</span></li>
+                        <li class="pt-2 text-brand-400 font-semibold">✨ Fresh Oven Batch 1: 07:00 AM</li>
+                        <li class="text-brand-400 font-semibold">✨ Fresh Oven Batch 2: 02:00 PM</li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div class="space-y-4">
+                    <h4 class="font-serif font-bold text-brand-50 text-sm tracking-wider uppercase">Fresh Bake Alert</h4>
+                    <p class="text-xs text-brand-300">Dapatkan notifikasi promo khusus dan varian menu terbatas langsung ke email Anda.</p>
+                    <form onsubmit="event.preventDefault(); alert('Terima kasih telah mendaftar newsletter Sela Rasa!');" class="flex flex-col gap-2">
+                        <input type="email" placeholder="Alamat Email Anda" required class="px-3.5 py-2.5 rounded-lg bg-brand-800 text-brand-100 text-xs border border-brand-700 focus:outline-none focus:border-brand-400">
+                        <button type="submit" class="px-4 py-2.5 bg-brand-500 hover:bg-brand-400 text-brand-900 font-bold text-xs rounded-lg transition-colors">
+                            Berlangganan
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 text-center text-xs text-brand-400 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p>&copy; 2026 Sela Rasa Bakery. All rights reserved.</p>
+                <p class="text-[11px] text-brand-500">Minimalist & Warm WordPress Design Concept</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE ELEMENTS & MODALS -->
+
+    <!-- Shopping Cart Slide-over Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-brand-900/50 backdrop-blur-sm transition-opacity"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-brand-50 shadow-2xl flex flex-col">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 bg-brand-100 border-b border-brand-200 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-brand-800 text-lg"></i>
+                        <h3 class="font-serif font-bold text-lg text-brand-900">Keranjang Belanja</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-brand-600 hover:text-brand-900 p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <div id="emptyCartMessage" class="text-center py-16 text-brand-600">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-brand-300"></i>
+                        <p class="font-semibold text-sm">Keranjang Anda masih kosong.</p>
+                        <p class="text-xs text-brand-500 mt-1">Pilih menu favorit Anda dan tambahkan ke sini!</p>
+                    </div>
+                </div>
+
+                <!-- Cart Footer & Checkout -->
+                <div class="p-6 bg-brand-100 border-t border-brand-200 space-y-4">
+                    <div class="flex justify-between text-sm font-semibold text-brand-900">
+                        <span>Total Pembayaran:</span>
+                        <span id="cartTotalPrice" class="font-serif font-bold text-lg">Rp 0</span>
+                    </div>
+                    <button onclick="processCheckout()" class="w-full py-3.5 bg-brand-800 hover:bg-brand-700 text-brand-50 font-bold rounded-xl transition-all shadow-md text-sm text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-credit-card text-xs"></i> Lanjut ke Pembayaran
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="fixed inset-0 z-50 hidden flex items-start justify-center pt-20 px-4">
+        <div onclick="toggleSearchModal()" class="absolute inset-0 bg-brand-900/60 backdrop-blur-sm"></div>
+        <div class="relative bg-brand-50 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-brand-200 z-10">
+            <div class="flex items-center gap-3 border-b border-brand-200 pb-3">
+                <i class="fa-solid fa-magnifying-glass text-brand-600"></i>
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Cari croissant, sourdough, cookie..." class="w-full bg-transparent text-sm focus:outline-none text-brand-900 font-medium placeholder-brand-400">
+                <button onclick="toggleSearchModal()" class="text-brand-500 hover:text-brand-800"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="searchResults" class="mt-4 max-h-60 overflow-y-auto space-y-2 text-xs text-brand-700">
+                <p class="text-brand-500">Ketik nama menu yang ingin Anda cari...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Menu Dataset
+        const menuProducts = [
+            {
+                id: 1,
+                name: "Dubai Chewy Cookie",
+                category: "specials",
+                price: 45000,
+                desc: "Cookie crunchy-chewy berisikan pistachio knafeh renyah & dark chocolate melt.",
+                image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 2,
+                name: "Pain au Chocolat",
+                category: "pastry",
+                price: 32000,
+                desc: "Pastry berlapis renyah khas Prancis dengan isian double dark chocolate leleh.",
+                image: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 3,
+                name: "Artisanal Salt Bread",
+                category: "bread",
+                price: 22000,
+                desc: "Roti mentega lembut bertabur kristal sea salt gurih beraroma kaya.",
+                image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 4,
+                name: "Country Sourdough Loaf",
+                category: "bread",
+                price: 48000,
+                desc: "Roti fermentasi alami 24 jam dengan kerak renyah dan tekstur dalam yang kenyal.",
+                image: "https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 5,
+                name: "Classic Butter Croissant",
+                category: "pastry",
+                price: 28000,
+                desc: "Croissant klasik berbentuk bulan sabit dengan keharuman butter Prancis sejati.",
+                image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 6,
+                name: "Almond Croissant",
+                category: "pastry",
+                price: 36000,
+                desc: "Croissant panggang ulang dengan isian krim frangipane manis dan taburan almond.",
+                image: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 7,
+                name: "Tiramisu Slice Cake",
+                category: "cake",
+                price: 42000,
+                desc: "Cake lembut dengan lapisan mascarpone cream, espresso murni, dan bubuk kakao.",
+                image: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 8,
+                name: "Banana Pudding Cup",
+                category: "specials",
+                price: 38000,
+                desc: "Pudding pisang creamy dengan biskuit vanila renyah dan lapisan krim vanila.",
+                image: "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 9,
+                name: "Red Velvet Cake Slice",
+                category: "cake",
+                price: 40000,
+                desc: "Cake lembut warna merah khas berpadu gurih manisnya cream cheese frosting.",
+                image: "https://images.unsplash.com/photo-1616541861927-4648757474a2?q=80&w=800&auto=format&fit=crop"
+            },
+            {
+                id: 10,
+                name: "Portuguese Egg Tart",
+                category: "pastry",
+                price: 18000,
+                desc: "Pastry renyah berkaramel dengan custard telur creamy yang lembut dan wangi.",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=800&auto=format&fit=crop"
+            }
+        ];
+
+        let cart = [];
+
+        // Format Currency Helper
+        function formatRupiah(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+        // Render Product Cards
+        function renderMenu(items) {
+            const container = document.getElementById('productGrid');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-brand-50 rounded-xl p-4 border border-brand-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative aspect-square rounded-lg overflow-hidden mb-3 bg-brand-200">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 bg-brand-200 px-2 py-0.5 rounded-full">${item.category}</span>
+                        <h3 class="font-serif font-bold text-base text-brand-900 mt-1">${item.name}</h3>
+                        <p class="text-brand-700 text-xs mt-1 line-clamp-2 leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-brand-200 flex items-center justify-between">
+                        <span class="font-serif font-bold text-sm text-brand-900">${formatRupiah(item.price)}</span>
+                        <button onclick="addToCart('${item.name}', ${item.price}, '${item.image}')" class="px-3 py-1.5 bg-brand-800 hover:bg-brand-700 text-brand-50 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Tambah
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter Menu Categories
+        function filterMenu(category, buttonEl) {
+            // Update active button styling
+            const tabs = document.querySelectorAll('.menu-tab');
+            tabs.forEach(tab => {
+                tab.className = "menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-50 text-brand-800 hover:bg-brand-200 border border-brand-300 transition-all";
+            });
+            buttonEl.className = "menu-tab px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap bg-brand-800 text-white shadow-sm transition-all";
+
+            if (category === 'all') {
+                renderMenu(menuProducts);
+            } else {
+                const filtered = menuProducts.filter(p => p.category === category);
+                renderMenu(filtered);
+            }
+        }
+
+        // Cart Management Logic
+        function addToCart(name, price, image) {
+            const existingIndex = cart.findIndex(item => item.name === name);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({ name, price, image, qty: 1 });
+            }
+            updateCartUI();
+            toggleCartDrawer(true);
+        }
+
+        function updateCartQty(index, change) {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartContainer = document.getElementById('cartItemsContainer');
+            const cartCountBadge = document.getElementById('cartCountBadge');
+            const cartTotalPrice = document.getElementById('cartTotalPrice');
+
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            cartCountBadge.innerText = totalItems;
+            cartTotalPrice.innerText = formatRupiah(totalPrice);
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div id="emptyCartMessage" class="text-center py-16 text-brand-600">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-brand-300"></i>
+                        <p class="font-semibold text-sm">Keranjang Anda masih kosong.</p>
+                        <p class="text-xs text-brand-500 mt-1">Pilih menu favorit Anda dan tambahkan ke sini!</p>
+                    </div>
+                `;
+            } else {
+                cartContainer.innerHTML = '';
+                cart.forEach((item, index) => {
+                    const itemEl = document.createElement('div');
+                    itemEl.className = "flex items-center gap-3 p-3 bg-brand-100 rounded-xl border border-brand-200";
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-serif font-bold text-xs text-brand-900 truncate">${item.name}</h4>
+                            <p class="text-xs text-brand-700 font-semibold">${formatRupiah(item.price)}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <button onclick="updateCartQty(${index}, -1)" class="w-5 h-5 rounded bg-brand-200 text-brand-800 flex items-center justify-center text-xs hover:bg-brand-300">-</button>
+                                <span class="text-xs font-bold text-brand-900">${item.qty}</span>
+                                <button onclick="updateCartQty(${index}, 1)" class="w-5 h-5 rounded bg-brand-200 text-brand-800 flex items-center justify-center text-xs hover:bg-brand-300">+</button>
+                            </div>
+                        </div>
+                        <span class="font-serif font-bold text-xs text-brand-900">${formatRupiah(item.price * item.qty)}</span>
+                    `;
+                    cartContainer.appendChild(itemEl);
+                });
+            }
+        }
+
+        // Toggle Drawer & Modals
+        function toggleCartDrawer(openOnly = false) {
+            const drawer = document.getElementById('cartDrawer');
+            if (openOnly) {
+                drawer.classList.remove('hidden');
+            } else {
+                drawer.classList.toggle('hidden');
+            }
+        }
+
+        function toggleSearchModal() {
+            const modal = document.getElementById('searchModal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('searchInput').focus();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('hidden');
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (query.trim() === '') {
+                resultsContainer.innerHTML = '<p class="text-brand-500">Ketik nama menu yang ingin Anda cari...</p>';
+                return;
+            }
+
+            const results = menuProducts.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-brand-500">Menu tidak ditemukan.</p>';
+            } else {
+                resultsContainer.innerHTML = results.map(p => `
+                    <div onclick="addToCart('${p.name}', ${p.price}, '${p.image}'); toggleSearchModal();" class="p-2 hover:bg-brand-100 rounded-lg cursor-pointer flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-brand-900 text-xs">${p.name}</p>
+                            <p class="text-[10px] text-brand-600">${formatRupiah(p.price)}</p>
+                        </div>
+                        <span class="text-[10px] bg-brand-200 px-2 py-0.5 rounded text-brand-800">Tambah</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function processCheckout() {
+            if (cart.length === 0) {
+                alert('Keranjang Anda masih kosong. Silakan pilih produk terlebih dahulu.');
+                return;
+            }
+            alert('Terima kasih! Pesanan Anda telah diterima oleh Sela Rasa Bakery.');
+            cart = [];
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderMenu(menuProducts);
+        };
+    </script>
+</body>
+</html>
